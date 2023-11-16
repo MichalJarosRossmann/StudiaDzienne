@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
@@ -21,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -44,16 +47,20 @@ class ComposeActivity : ComponentActivity() {
 }
 
 @Composable
-fun ComposeScreen(viewModel: RestaurantViewModel=RestaurantViewModel()) {
+fun ComposeScreen(viewModel: RestaurantViewModel = RestaurantViewModel()) {
     // zamiana liveData na state
-    val state=viewModel.liveData.observeAsState()
+    val state = viewModel.liveData.observeAsState()
 
     Surface(modifier = Modifier.fillMaxSize()) {
 
         val value = state.value
-        when(value){
+        when (value) {
             is RestaurantViewModel.ViewState.Loading -> ShowProgressBar()
-            is RestaurantViewModel.ViewState.ShowRestaurants -> RestauranList(value)
+            is RestaurantViewModel.ViewState.ShowRestaurants ->
+                RestauranList(value){
+                    viewModel.addRestaurant(it)
+                }
+
             null -> {}
         }
     }
@@ -61,12 +68,13 @@ fun ComposeScreen(viewModel: RestaurantViewModel=RestaurantViewModel()) {
 
 @Composable
 fun ShowProgressBar() {
-    TODO("Not yet implemented")
+
 }
 
 @Composable
-fun RestauranList(state: RestaurantViewModel.ViewState.ShowRestaurants) {
+fun RestauranList(state: RestaurantViewModel.ViewState.ShowRestaurants,newRecordAdded: (Restaurant) -> Unit) {
     LazyColumn {
+        item { NewRecordElement(newRecordAdded) }
         state.restaurants.forEach {
             item {
                 RestaurantRow(it)
@@ -78,9 +86,11 @@ fun RestauranList(state: RestaurantViewModel.ViewState.ShowRestaurants) {
 
 @Composable
 fun RestaurantRow(restaurant: Restaurant) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         Image(
             painter = painterResource(id = R.drawable.kotek),
             contentDescription = "zdjęcie restauracji",
@@ -98,10 +108,23 @@ fun RestaurantRow(restaurant: Restaurant) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewRecordElement(){
-    TextField(value = "", onValueChange = {
+fun NewRecordElement(newRecordAdded: (Restaurant) -> Unit) {
+//zapisywanie wartości TextField
+    val textFieldState = remember {
+        mutableStateOf("")
+    }
+    Column {
+        TextField(value = textFieldState.value, onValueChange = {
+            textFieldState.value = it
+        })
 
-    })
+        Button(onClick = {
+            newRecordAdded.invoke(Restaurant(textFieldState.value, "", false))
+        }) {
+            Text(text = "Zapisz")
+        }
+    }
+
 }
 
 
@@ -117,6 +140,8 @@ fun NewRecordElement(){
 )
 @Composable
 fun RowPreview() {
-    RestaurantRow(Restaurant("test", "błotna", true))
+    NewRecordElement {
+
+    }
 }
 
