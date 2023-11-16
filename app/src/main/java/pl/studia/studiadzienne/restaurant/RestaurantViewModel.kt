@@ -12,12 +12,15 @@ class RestaurantViewModel: ViewModel() {
     private val _liveData = MutableLiveData<ViewState>()
     val liveData : LiveData<ViewState> = _liveData
 
+    init {
+        loadRestaurants()
+    }
     fun loadRestaurants() {
         _liveData.postValue(ViewState.ShowRestaurants(restaurantProvider.getRestaurants()))
     }
 
     sealed class ViewState{
-        class Loading():ViewState()
+        class Loading :ViewState()
         class ShowRestaurants(val restaurants: List<Restaurant>):ViewState()
     }
 
