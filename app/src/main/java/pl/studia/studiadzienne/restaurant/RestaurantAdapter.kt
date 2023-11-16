@@ -22,6 +22,8 @@ class RestaurantAdapter : RecyclerView.Adapter<ViewHolder>() {
         return restaurants.size
     }
 
+
+
     //usupełnienie już utworzonego widoku
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         (holder as RestaurantViewHolder).bind(restaurants[position])
