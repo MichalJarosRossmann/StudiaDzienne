@@ -14,6 +14,10 @@ interface RestaurantApi {
     fun getRestaurantList(): Call<List<Restaurant>>
 
 
+    @GET("RestaurantList")
+    suspend fun getRestaurantListSuspend():List<Restaurant>
+
+
 
 
 }
