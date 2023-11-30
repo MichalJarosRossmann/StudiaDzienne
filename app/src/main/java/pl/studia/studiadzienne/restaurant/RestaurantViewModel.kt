@@ -15,12 +15,22 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pl.studia.studiadzienne.api.ClienProvider
+import pl.studia.studiadzienne.api.ClientProviderSingleton
 import pl.studia.studiadzienne.api.RestaurantHelloWorldResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RestaurantViewModel : ViewModel() {
+
+    //instncja tworzona dla każdego viewmodelu osobno
+//    val restaurantApi=ClienProvider().getRestaurantApi()
+
+    //Jedna instancja tworzona na aplikacje
+    val restaurantApi= ClientProviderSingleton.restaurantApi
+
+
+
 
     val restaurantProvider = RestaurantProvider()
 
@@ -122,15 +132,17 @@ class RestaurantViewModel : ViewModel() {
 
     fun getRestauranAsync(){
         CoroutineScope(Dispatchers.Main).launch {
+            //zapytania do api powinny być w try catch
         val restaurantListSuspend = try {
             ClienProvider().getRestaurantApi().getRestaurantListSuspend()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
             Log.i("getRestauranAsync","$restaurantListSuspend")
         }
     }
+
+
 
     suspend fun onBackground()= withContext(Dispatchers.IO){
         Log.i("CoroutineScope","onBackground start")
