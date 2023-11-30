@@ -1,5 +1,6 @@
 package pl.studia.studiadzienne.api
 
+import pl.studia.studiadzienne.api.responses.RestaurantResponse
 import pl.studia.studiadzienne.restaurant.Restaurant
 import retrofit2.Call
 import retrofit2.Response
@@ -15,7 +16,7 @@ interface RestaurantApi {
     fun getRestaurantList(): Call<List<Restaurant>>
 
     @GET("RestaurantList")
-    suspend fun getRestaurantListSuspend():List<Restaurant>
+    suspend fun getRestaurantListSuspend():List<RestaurantResponse>
 
     @GET("RestaurantList")
     suspend fun getRestaurantListSuspend2():Response<List<Restaurant>>

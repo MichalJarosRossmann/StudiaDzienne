@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pl.studia.studiadzienne.api.ClienProvider
 import pl.studia.studiadzienne.api.ClientProviderSingleton
+import pl.studia.studiadzienne.api.LoadRestaurantUseCase
 import pl.studia.studiadzienne.api.RestaurantHelloWorldResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,6 +55,17 @@ class RestaurantViewModel : ViewModel() {
         ClienProvider().getRestaurantApi().getHelloWorld().enqueue(object :Callback<RestaurantHelloWorldResponse>{
             override fun onResponse(call: Call<RestaurantHelloWorldResponse>, response: Response<RestaurantHelloWorldResponse>) {
                 Log.i("getHelloWorld","${response.body()?.msg}")
+
+                ClienProvider().getRestaurantApi().getRestaurantList().enqueue(object :Callback<List<Restaurant>>{
+                    override fun onResponse(call: Call<List<Restaurant>>, response: Response<List<Restaurant>>) {
+                        Log.i("getHelloWorld","${response.body()}")
+                    }
+
+                    override fun onFailure(call: Call<List<Restaurant>>, t: Throwable) {
+                        Log.e("getHelloWorld","${t.message}")
+                    }
+
+                })
             }
 
             override fun onFailure(call: Call<RestaurantHelloWorldResponse>, t: Throwable) {
@@ -139,6 +151,13 @@ class RestaurantViewModel : ViewModel() {
             e.printStackTrace()
         }
             Log.i("getRestauranAsync","$restaurantListSuspend")
+        }
+    }
+
+    //pobieranie danych za pomocą usecase
+    fun getRestaurant(){
+        viewModelScope.launch {
+            val restaurantList = LoadRestaurantUseCase().invoke()
         }
     }
 
