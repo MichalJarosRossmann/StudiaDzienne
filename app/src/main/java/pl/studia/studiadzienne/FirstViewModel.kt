@@ -13,6 +13,7 @@ class FirstViewModel : ViewModel() {
     val liveData = MutableLiveData<ViewState>()
 
 
+
     fun getSomething() {
         CoroutineScope(Dispatchers.IO).launch {
             liveData.postValue(ViewState.Loading())
@@ -25,7 +26,7 @@ class FirstViewModel : ViewModel() {
     }
 
     sealed class ViewState{
-        class Loading():ViewState()
+        class Loading :ViewState()
         class ShowText(val text:String):ViewState()
     }
 }
