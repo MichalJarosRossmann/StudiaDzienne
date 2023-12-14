@@ -119,7 +119,7 @@ fun NewRecordElement(newRecordAdded: (Restaurant) -> Unit) {
         })
 
         Button(onClick = {
-            newRecordAdded.invoke(Restaurant(textFieldState.value, "", false))
+            newRecordAdded.invoke(Restaurant(textFieldState.value, "", false,1))
         }) {
             Text(text = "Zapisz")
         }

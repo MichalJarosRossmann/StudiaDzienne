@@ -1,5 +1,8 @@
 package pl.studia.studiadzienne.api
 
+import io.realm.kotlin.Configuration
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
