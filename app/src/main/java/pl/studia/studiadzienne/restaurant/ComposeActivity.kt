@@ -1,5 +1,6 @@
 package pl.studia.studiadzienne.restaurant
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,7 +30,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import pl.studia.studiadzienne.R
+import pl.studia.studiadzienne.restaurant.services.ShopService
+import pl.studia.studiadzienne.workers.TestWorker
+import java.util.concurrent.TimeUnit
 
 class ComposeActivity : ComponentActivity() {
 
@@ -37,6 +45,20 @@ class ComposeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//odpalanie serwisu
+        startService(Intent(this,ShopService::class.java))
+
+        //odpalanie workera
+        val workRequest= OneTimeWorkRequestBuilder<TestWorker>()
+            .setConstraints(Constraints.Builder()
+                .setRequiresCharging(true)
+                .setRequiresStorageNotLow(false)
+                .build()).build()
+        val workRequest2= PeriodicWorkRequestBuilder<TestWorker>(15,TimeUnit.MINUTES).build()
+
+        WorkManager.getInstance(this)
+            .beginWith(workRequest)
+            .enqueue()
 
 
 
@@ -124,6 +146,7 @@ fun NewRecordElement(newRecordAdded: (Restaurant) -> Unit) {
             Text(text = "Zapisz")
         }
     }
+
 
 }
 

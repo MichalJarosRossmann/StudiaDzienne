@@ -4,6 +4,9 @@
 
 <!--    uprawnienie do pobierania danych z internetu-->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
 
     <application
         android:allowBackup="false"
@@ -15,6 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudiaDzienne"
         tools:targetApi="31">
+
+        <service android:name=".restaurant.services.ShopService" android:exported="false"/>
         <activity
             android:name=".restaurant.ComposeActivity"
             android:exported="true"

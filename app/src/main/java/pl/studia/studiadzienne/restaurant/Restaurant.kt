@@ -4,5 +4,5 @@ data class Restaurant(
     val name: String,
     val address: String,
     val open: Boolean,
-    val homeNumber:Int
+    val homeNumber:Int=10
 )

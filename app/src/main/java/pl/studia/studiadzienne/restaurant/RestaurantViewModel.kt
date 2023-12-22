@@ -18,6 +18,8 @@ import pl.studia.studiadzienne.api.ClienProvider
 import pl.studia.studiadzienne.api.ClientProviderSingleton
 import pl.studia.studiadzienne.api.LoadRestaurantUseCase
 import pl.studia.studiadzienne.api.RestaurantHelloWorldResponse
+import pl.studia.studiadzienne.restaurant.db.TestDbRealm
+import pl.studia.studiadzienne.restaurant.db.entities.TestEntityRealm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,8 +49,25 @@ class RestaurantViewModel : ViewModel() {
 //        asycnOld()
         asyncNew()
         getRestauranAsync()
+        testRealm()
     }
 
+    private fun testRealm() {
+        Log.i("testReam", "start")
+
+
+            val testDbRealm = TestDbRealm()
+
+            Log.i("testReam", "getData ${testDbRealm.getField()}")
+            testDbRealm.saveField(TestEntityRealm().apply {
+                id = 1
+                this.name = "test"
+                this.surname = "surname"
+            })
+
+            Log.i("testReam", "getData ${testDbRealm.getField()}")
+
+    }
 
     //pobieranie asynchroniczne bez coroutines
     fun getHelloWorld(){

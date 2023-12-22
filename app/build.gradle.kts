@@ -4,6 +4,7 @@ plugins {
     id ("io.realm.kotlin")
 }
 
+
 android {
     namespace = "pl.studia.studiadzienne"
     compileSdk = 34
@@ -82,6 +83,18 @@ dependencies {
     implementation ("io.realm.kotlin:library-base:1.11.0")
     implementation ("io.realm.kotlin:library-sync:1.11.0")// If using Device Sync
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")// If using coroutines with the SDK
+
+
+    // (Java only)
+    implementation ("androidx.work:work-runtime:2.9.0")
+
+    // Kotlin + coroutines
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+
+//    implementation ("androidx.room:room-runtime:2.6.1")
+//    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    // To use Kotlin annotation processing tool (kapt)
+//    kapt ("androidx.room:room-compiler:2.6.1")
 
 
 

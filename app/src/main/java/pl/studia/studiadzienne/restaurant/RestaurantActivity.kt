@@ -1,14 +1,20 @@
 package pl.studia.studiadzienne.restaurant
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelStore
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.studia.studiadzienne.FirstViewModel
 import pl.studia.studiadzienne.databinding.ActivityRestaurantBinding
 import pl.studia.studiadzienne.databinding.ActivityStartBinding
+import pl.studia.studiadzienne.restaurant.db.TestDbRealm
+import pl.studia.studiadzienne.restaurant.db.entities.TestEntityRealm
 
 class RestaurantActivity : AppCompatActivity() {
 
@@ -21,6 +27,8 @@ class RestaurantActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+
 
 
         val restaurantAdapter = RestaurantAdapter()
@@ -46,6 +54,8 @@ class RestaurantActivity : AppCompatActivity() {
 
         viewModel.loadRestaurants()
     }
+
+
 
 
 }
