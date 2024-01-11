@@ -2,6 +2,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("io.realm.kotlin")
+    id ("com.google.dagger.hilt.android")
+    id ("kotlin-kapt")
+
+
 }
 
 
@@ -27,6 +31,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -95,6 +100,10 @@ dependencies {
 //    annotationProcessor ("androidx.room:room-compiler:2.6.1")
     // To use Kotlin annotation processing tool (kapt)
 //    kapt ("androidx.room:room-compiler:2.6.1")
+
+    implementation ("com.google.dagger:hilt-android:2.48")
+    kapt ("com.google.dagger:hilt-compiler:2.48")
+
 
 
 

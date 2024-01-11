@@ -59,11 +59,11 @@ class RestaurantViewModel : ViewModel() {
             val testDbRealm = TestDbRealm()
 
             Log.i("testReam", "getData ${testDbRealm.getField()}")
-            testDbRealm.saveField(TestEntityRealm().apply {
-                id = 1
-                this.name = "test"
-                this.surname = "surname"
-            })
+//            testDbRealm.saveField(TestEntityRealm().apply {
+//                id = 1
+//                this.name = "test"
+//                this.surname = "surname"
+//            })
 
             Log.i("testReam", "getData ${testDbRealm.getField()}")
 
